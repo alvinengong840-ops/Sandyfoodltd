@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Fresh, delicious and affordable food services">
+  <meta name="keywords" content="food, catering, restaurant, fresh food">
+  <meta name="author" content="Sandy Food Ltd">
+  <title>Sandy Food Ltd | Welcome</title>    
+
+  <style>  
+    body {  
+      font-family: Arial, sans-serif;  
+      margin: 0;  
+      background: #f4f4f4;  
+    }  
+    header {  
+      background: #e8491d;  
+      color: #fff;  
+      padding: 20px 0;  
+    }  
+    .container {  
+      width: 80%;  
+      margin: auto;  
+      overflow: hidden;  
+    }  
+    #branding h1 {  
+      margin: 0;  
+    }  
+    .highlight {  
+      color: #000;  
+      background: #fff;  
+      padding: 0 5px;  
+    }  
+    nav ul {  
+      list-style: none;  
+      padding: 0;  
+    }  
+    nav ul li {  
+      display: inline;  
+      margin-left: 15px;  
+    }  
+    nav ul li a {  
+      color: #fff;  
+      text-decoration: none;  
+      font-weight: bold;  
+    }  
+    nav ul li.current a {  
+      text-decoration: underline;  
+    }  
+    #showcase {  
+      background: #fff8f0;  
+      padding: 80px 0;  
+      text-align: center;  
+    }  
+    #showcase h1 {  
+      font-size: 48px;  
+      color: #e8491d;  
+      margin-bottom: 20px;  
+    }  
+    #showcase p {  
+      font-size: 20px;  
+      color: #333;  
+      max-width: 700px;  
+      margin: auto;  
+    }  
+    #newsletter {  
+      background: #fff;  
+      padding: 40px 0;  
+      text-align: center;  
+      border-left: 5px solid #e8491d;  
+    }  
+    #newsletter h1 {  
+      color: #333;  
+      margin-bottom: 20px;  
+    }  
+    #newsletter input[type="email"] {  
+      padding: 10px;  
+      width: 250px;  
+      border: 1px solid #ccc;  
+      border-radius: 3px;  
+    }  
+    #newsletter button {  
+      padding: 10px 20px;  
+      background: #e8491d;  
+      color: #fff;  
+      border: none;  
+      cursor: pointer;  
+      border-radius: 3px;  
+      margin-left: 10px;  
+    }  
+    #newsletter button:hover {  
+      opacity: 0.9;  
+    }  
+    #boxes {  
+      display: flex;  
+      justify-content: space-between;  
+      flex-wrap: wrap;  
+      margin-top: 40px;  
+    }  
+    .box {  
+      background: #fff;  
+      width: 30%;  
+      text-align: center;  
+      padding: 20px;  
+      margin-bottom: 20px;  
+      border-left: 5px solid #e8491d;  
+      border-radius: 5px;  
+    }  
+    .box img {  
+      width: 80px;  
+      margin-bottom: 15px;  
+    }  
+    .box h3 {  
+      color: #e8491d;  
+      margin-bottom: 10px;  
+    }  
+    .box p {  
+      color: #333;  
+      font-size: 16px;  
+      line-height: 1.5;  
+    }  
+    footer {  
+      background: #333;  
+      color: #fff;  
+      text-align: center;  
+      padding: 15px;  
+      margin-top: 40px;  
+    }  
+    @media(max-width: 900px) {  
+      #boxes {  
+        flex-direction: column;  
+        align-items: center;  
+      }  
+      .box {  
+        width: 80%;  
+      }  
+    }  
+  </style>  
+</head>  
+<body>  
+  <!-- HEADER -->  
+  <header>  
+    <div class="container">  
+      <div id="branding">  
+        <h1><span class="highlight">Sandy</span> Food Ltd</h1>  
+      </div>  
+      <nav>  
+        <ul>  
+          <li class="current"><a href="index.html">Home</a></li>  
+          <li><a href="about.html">About</a></li>  
+          <li><a href="menu.html">Menu</a></li>  
+          <li><a href="contact.html">Contact</a></li>  
+        </ul>  
+      </nav>  
+    </div>  
+  </header>  
+
+  <!-- SHOWCASE -->  
+  <section id="showcase">  
+    <div class="container">  
+      <h1>Fresh & Delicious Food Every Day</h1>  
+      <p>Sandy Food Ltd delivers high-quality meals made with fresh ingredients, prepared by experienced chefs you can trust.</p>  
+    </div>  
+  </section>  
+
+  <!-- NEWSLETTER -->  
+  <section id="newsletter">  
+    <div class="container">  
+      <h1>Subscribe for Food Updates</h1>  
+      <form id="subscribeForm">  
+        <input type="email" id="emailInput" placeholder="Enter Email..." required>  
+        <button type="submit" class="button_1">Subscribe</button>  
+      </form>  
+    </div>  
+  </section>  
+
+  <!-- BOXES -->  
+  <section id="boxes" class="container">  
+    <div class="box">  
+      <img src="./img/fresh_food.png" alt="Fresh Ingredients">  
+      <h3>Fresh Ingredients</h3>  
+      <p>We use only farm-fresh ingredients to ensure great taste and nutrition.</p>  
+    </div>  
+    <div class="box">  
+      <img src="./img/chef.png" alt="Expert Chefs">  
+      <h3>Expert Chefs</h3>  
+      <p>Our meals are prepared by professional chefs with years of experience.</p>  
+    </div>  
+    <div class="box">  
+      <img src="./img/delivery.png" alt="Fast Delivery">  
+      <h3>Fast Delivery</h3>  
+      <p>Hot, fresh meals delivered quickly and safely to your doorstep.</p>  
+    </div>  
+  </section>  
+
+  <!-- FOOTER -->  
+  <footer>  
+    <p>Sandy Food Ltd, Copyright &copy; 2026</p>  
+  </footer>  
+
+  <!-- INTERNAL JAVASCRIPT -->  
+  <script>
+    document.getElementById("subscribeForm").addEventListener("submit", function(e) {
+      e.preventDefault(); // Prevent page reload
+      const email = document.getElementById("emailInput").value;
+      if(email) {
+        alert("Thank you for subscribing! Your email: " + email);
+        document.getElementById("emailInput").value = ""; // Clear the input
+      }
+    });
+  </script>  
+</body>  
+</html>

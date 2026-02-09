@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Menu | Sandy Food Ltd</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f4f4;
+    }
+
+    header {
+      background: #e8491d;
+      color: #fff;
+      padding: 20px 0;
+    }
+
+    .container {
+      width: 80%;
+      margin: auto;
+      overflow: hidden;
+    }
+
+    #branding h1 {
+      margin: 0;
+    }
+
+    .highlight {
+      color: #000;
+      background: #fff;
+      padding: 0 5px;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    nav ul li {
+      display: inline;
+      margin-left: 15px;
+    }
+
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav ul li.current a {
+      text-decoration: underline;
+    }
+
+    h2 {
+      margin-top: 30px;
+      color: #333;
+    }
+
+    .menu-item {
+      background: #fff;
+      padding: 15px;
+      margin: 15px 0;
+      border-left: 5px solid #e8491d;
+    }
+
+    .menu-item h3 {
+      margin: 0;
+    }
+
+    .menu-item p {
+      font-size: 18px;
+      color: #555;
+    }
+
+    .menu-item button {
+      background: #e8491d;
+      color: #fff;
+      border: none;
+      padding: 8px 15px;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+
+    .menu-item button:hover {
+      opacity: 0.9;
+    }
+
+    #cart {
+      list-style: none;
+      padding: 0;
+    }
+
+    #cart li {
+      background: #fff;
+      margin: 8px 0;
+      padding: 10px;
+      border-left: 5px solid #333;
+    }
+
+    #dashboard {
+      background: #fff;
+      padding: 15px;
+      margin: 20px 0;
+      border-left: 5px solid #e8491d;
+    }
+
+    #dashboard h3 {
+      margin-top: 0;
+      color: #e8491d;
+    }
+
+    #dashboard ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    #dashboard ul li {
+      padding: 5px 0;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .button_1 {
+      background: #333;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    footer {
+      background: #333;
+      color: #fff;
+      text-align: center;
+      padding: 15px;
+      margin-top: 30px;
+    }
+
+    /* FIXED TOTAL DISPLAY */
+    #totalDisplay {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      background: #e8491d;
+      color: #fff;
+      padding: 10px 15px;
+      border-radius: 5px;
+      font-weight: bold;
+      z-index: 1000;
+    }
+  </style>
+
+  <script>
+    let total = 0;
+    let currentOrder = [];
+    const mobileMoneyNumber = "653415784"; // Mobile Money number for Flutterwave
+
+    // Update total display
+    function updateTotalDisplay() {
+      document.getElementById("totalDisplay").textContent = "Total: " + total + " FCFA";
+    }
+
+    // Add item to cart
+    function addToCart(item, price) {
+      const cart = document.getElementById("cart");
+      const li = document.createElement("li");
+      li.textContent = item + " - " + price + " FCFA";
+      cart.appendChild(li);
+
+      currentOrder.push({item, price});
+      total += price;
+      updateTotalDisplay();
+    }
+
+    // Checkout using Flutterwave
+    function checkout() {
+      if (total === 0) {
+        alert("Your cart is empty!");
+        return;
+      }
+
+      const timestamp = new Date().toLocaleString();
+      const order = {
+        items: currentOrder,
+        total: total,
+        time: timestamp
+      };
+
+      // Save order to localStorage
+      let previousOrders = JSON.parse(localStorage.getItem("orders")) || [];
+      previousOrders.push(order);
+      localStorage.setItem("orders", JSON.stringify(previousOrders));
+
+      // Prepare Flutterwave link for Mobile Money (replace with your actual Flutterwave link if you have one)
+      const description = encodeURIComponent(`Order of ${currentOrder.map(i => i.item).join(", ")} totaling ${total} FCFA`);
+      const flutterwaveLink = `https://checkout.flutterwave.com/v3/hosted/pay?amount=${total}&currency=XAF&tx_ref=${Date.now()}&payment_type=mobilemoney&phonenumber=${mobileMoneyNumber}&redirect_url=${encodeURIComponent(window.location.href)}&description=${description}`;
+
+      // Open Flutterwave payment
+      window.open(flutterwaveLink, "_blank");
+
+      // Reset current order
+      document.getElementById("cart").innerHTML = "";
+      total = 0;
+      currentOrder = [];
+      updateTotalDisplay();
+      displayDashboard();
+    }
+
+    // Display previous orders
+    function displayDashboard() {
+      const dashboard = document.getElementById("dashboardList");
+      dashboard.innerHTML = "";
+      const previousOrders = JSON.parse(localStorage.getItem("orders")) || [];
+
+      previousOrders.reverse().forEach((order, index) => {
+        const li = document.createElement("li");
+        li.innerHTML = `<strong>Order ${previousOrders.length - index}</strong> (${order.time}): Total ${order.total} FCFA<br>
+          Items: ${order.items.map(i => i.item + " (" + i.price + " FCFA)").join(", ")}`;
+        dashboard.appendChild(li);
+      });
+    }
+
+    window.onload = () => {
+      updateTotalDisplay();
+      displayDashboard();
+    };
+  </script>
+</head>
+
+<body>
+
+  <!-- TOTAL DISPLAY -->
+  <div id="totalDisplay">Total: 0 FCFA</div>
+
+  <header>
+    <div class="container">
+      <div id="branding">
+        <h1><span class="highlight">Sandy</span> Food Ltd</h1>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li class="current"><a href="menu.html">Menu</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="container">
+    <h2>Our Menu</h2>
+
+    <div class="menu-item">
+      <h3>Grilled Chicken</h3>
+      <p>12000 FCFA</p>
+      <button onclick="addToCart('Grilled Chicken',12000)">Add to Order</button>
+    </div>
+
+    <div class="menu-item">
+      <h3>Beef Burger</h3>
+      <p>10000 FCFA</p>
+      <button onclick="addToCart('Beef Burger',10000)">Add to Order</button>
+    </div>
+
+    <div class="menu-item">
+      <h3>Veggie Pizza</h3>
+      <p>15000 FCFA</p>
+      <button onclick="addToCart('Veggie Pizza',15000)">Add to Order</button>
+    </div>
+  </section>
+
+  <section class="container">
+    <h2>Your Order</h2>
+    <ul id="cart"></ul>
+    <button onclick="checkout()" class="button_1">Place Order</button>
+  </section>
+
+  <section class="container" id="dashboard">
+    <h3>Previous Orders</h3>
+    <ul id="dashboardList"></ul>
+  </section>
+
+  <footer>
+    <p>Sandy Food Ltd © 2026</p>
+  </footer>
+
+</body>
+</html>
